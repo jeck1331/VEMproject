@@ -4,6 +4,8 @@ const port = 3000;
 const history = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const MongoClient = require('mongodb').MongoClient;
+const mongoClient = new MongoClient("mongodb://127.0.0.1:27017");
 
 app.use(bodyParser.json());
 app.use(history());
@@ -11,8 +13,28 @@ app.use(cors());
 
 app.use(express.urlencoded({extended: true}));
 
-app.get('/', (req, res) => {
-    res.send(`app listening on port ${port}`)
+(async () => {
+    try {
+        await mongoClient.connect();
+        app.locals.collection = mongoClient.db("tulgu").collection("tulgu_web");
+        app.listen(3000);
+        console.log('Server connecting...');
+    }catch (err) {
+        return console.log(err);
+    }
+})();
+
+app.get('/', async (req, res) => {
+    const collection = req.app.locals.collection;
+    try {
+        const user = await collection.find({}).toArray();
+        console.log(user);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+
+    res.send(`app listening on port ${port}`);
 });
 
 let datatable = [
@@ -58,7 +80,17 @@ let datatable = [
     },
 ]
 
-app.get('/about/datatable', (req, res) => {
+app.get('/about/datatable', async (req, res) => {
+
+    const collection = req.app.locals.collection;
+    try {
+        const user = await collection.find({}).toArray();
+        console.log(user);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+
     res.send(datatable);
 });
 
@@ -66,4 +98,9 @@ app.get('/about/datatable/:id', (req, res) => {
     res.send(datatable[req.params.id-1]);
 });
 
-app.listen(port);
+process.on("SIGINT", async() => {
+
+    await mongoClient.close();
+    console.log("Приложение завершило работу");
+    process.exit();
+});
