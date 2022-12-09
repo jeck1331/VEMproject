@@ -1,0 +1,18 @@
+.default-template {
+	width: 100%;
+	height: 90%;
+
+	display: flex;
+	flex-direction: column;
+
+	.title {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		h3 {
+			color: #512c93;
+			font-size: 24px;
+			font-weight: 500;
+		}
+	}
+}
