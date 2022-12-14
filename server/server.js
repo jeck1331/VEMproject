@@ -16,7 +16,8 @@ app.use(express.urlencoded({extended: true}));
 (async () => {
     try {
         await mongoClient.connect();
-        app.locals.collection = mongoClient.db("tulgu").collection("tulgu_web");
+        app.locals.tulgu_web = mongoClient.db("tulgu").collection("tulgu_web");
+        app.locals.persons = mongoClient.db("tulgu").collection("persons");
         app.listen(3000);
         console.log('Server connecting...');
     }catch (err) {
@@ -25,15 +26,6 @@ app.use(express.urlencoded({extended: true}));
 })();
 
 app.get('/', async (req, res) => {
-    const collection = req.app.locals.collection;
-    try {
-        const user = await collection.find({}).toArray();
-        console.log(user);
-    } catch (err) {
-        console.log(err);
-        res.sendStatus(500);
-    }
-
     res.send(`app listening on port ${port}`);
 });
 
@@ -81,17 +73,19 @@ let datatable = [
 ]
 
 app.get('/about/datatable', async (req, res) => {
+    res.send(datatable);
+});
 
-    const collection = req.app.locals.collection;
+app.get('/persons', async (req, res) => {
+    const collection = req.app.locals.persons;
+    console.log(collection)
     try {
-        const user = await collection.find({}).toArray();
-        console.log(user);
+        const persons = await collection.find({}).toArray();
+        res.send(persons);
     } catch (err) {
         console.log(err);
         res.sendStatus(500);
     }
-
-    res.send(datatable);
 });
 
 app.get('/about/datatable/:id', (req, res) => {
@@ -99,7 +93,6 @@ app.get('/about/datatable/:id', (req, res) => {
 });
 
 process.on("SIGINT", async() => {
-
     await mongoClient.close();
     console.log("Приложение завершило работу");
     process.exit();

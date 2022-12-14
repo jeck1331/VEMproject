@@ -1,46 +1,32 @@
+<script setup>
+import {RouterLink} from 'vue-router'
+</script>
 <template>
   <div class="default-template">
     <div class="title">
       <h3>{{ title }}</h3>
-    </div>*
-<!--    <h3>AboutPage</h3>-->
-<!--    <div class="for-table" style="display: flex; align-items: center">-->
-<!--      <va-button class="mr-4 mb-2 ph-2" pressed-behavior="mask" :pressed-opacity="1" pressed-mask-color="warning"-->
-<!--                 @click="getData()">Get data</va-button>-->
-<!--      <va-input class="ui-input mb-2 mh-2" v-model="id" />-->
-<!--      <va-button class="mr-4 mb-2 ph-2" pressed-behavior="mask" :pressed-opacity="1" pressed-mask-color="warning"-->
-<!--                 @click="getDataById(id)">Get Data By Id = {{id}}</va-button>-->
-<!--    </div>-->
-<!--    <va-data-table :items="items"/>-->
+    </div>
+    <div class="body">
+      <div class="row-span">
+        <h1>Общественно-политическая партия "Х"</h1>
+        <h3>это тульская общественно-политическая партия</h3>
+      </div>
+      <div class="row-span">
+        <span>Адрес: г. Тула, ул. проспект Ленина 92</span>
+      </div>
+      <div class="row-span">
+        <RouterLink class="router-link" to="../charter">Устав партии</RouterLink>
+      </div>
+      <div class="row-span">
+        <RouterLink class="router-link" to="../persons">Лица партии</RouterLink>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import DataService from "@/services/DataService";
-
 export default {
   name: 'AboutPage',
-  data() {
-    return {
-      items: [],
-      id: ''
-    }
-  },
-  created() {
-    this.getData();
-  },
-  methods: {
-    async getData() {
-      DataService.getData().then(event => {
-        this.items = event;
-      });
-    },
-    async getDataById(id) {
-      DataService.getDataById(id).then(event => {
-        this.items = [event];
-      });
-    }
-  },
   props: {
     title: String
   }

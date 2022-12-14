@@ -4,6 +4,10 @@
       <h3>{{ title }}</h3>
     </div>
     <div class="body">
+      <div class="info-home">
+        <h1>Общественно-политичкая партия "X"</h1>
+        <h2>Из прекрасной Тулы, для людей!</h2>
+      </div>
       <div class="carousel">
         <va-carousel :items="items" v-model="value" :ratio="21/9" />
       </div>

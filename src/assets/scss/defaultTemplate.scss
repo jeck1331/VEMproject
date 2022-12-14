@@ -15,4 +15,29 @@
 			font-weight: 500;
 		}
 	}
+
+	.body {
+		.row-span {
+			width: 100%;
+			padding: 20px;
+
+			display: flex;
+			flex-display: row;
+			align-items: center;
+
+			h1 {
+				font-size: 40px;
+				margin-right: 40px;
+			}
+			h3 {
+				font-size: 32px;
+				font-weight: 400;
+			}
+			span, .router-link {
+				width: 100%;
+				font-size: 32px;
+				font-weight: 500;
+			}
+		}
+	}
 }

@@ -10,5 +10,9 @@ export default {
     async getDataById(id) {
         let res = await axios.get(`${Global.API}/about/datatable/${id}`);
         return res.data;
+    },
+    async getPersons() {
+        let res = await axios.get(`${Global.API}/persons`);
+        return res.data;
     }
 }
