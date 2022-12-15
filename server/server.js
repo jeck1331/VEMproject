@@ -18,6 +18,8 @@ app.use(express.urlencoded({extended: true}));
         await mongoClient.connect();
         app.locals.tulgu_web = mongoClient.db("tulgu").collection("tulgu_web");
         app.locals.persons = mongoClient.db("tulgu").collection("persons");
+        app.locals.charter = mongoClient.db("tulgu").collection("charter");
+        app.locals.news = mongoClient.db("tulgu").collection("news");
         app.listen(3000);
         console.log('Server connecting...');
     }catch (err) {
@@ -82,6 +84,30 @@ app.get('/persons', async (req, res) => {
     try {
         const persons = await collection.find({}).toArray();
         res.send(persons);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+app.get('/charter', async (req, res) => {
+    const collection = req.app.locals.charter;
+    console.log(collection)
+    try {
+        const charter = await collection.find({}).toArray();
+        res.send(charter);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+app.get('/news', async (req, res) => {
+    const collection = req.app.locals.news;
+    console.log(collection)
+    try {
+        const news = await collection.find({}).toArray();
+        res.send(news);
     } catch (err) {
         console.log(err);
         res.sendStatus(500);

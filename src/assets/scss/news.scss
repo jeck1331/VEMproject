@@ -1,0 +1,22 @@
+.body {
+
+  padding: 40px 60px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .cards {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+
+    .card {
+      width: 45%;
+      max-height: 500px;
+      margin: 20px;
+    }
+  }
+}

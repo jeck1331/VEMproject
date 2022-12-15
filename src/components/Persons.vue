@@ -4,7 +4,7 @@
       <h3>{{ title }}</h3>
     </div>
     <div class="persons">
-      <div class="person" v-for="person in persons" :key="person.id">
+      <div class="person" v-for="person in persons" :key="person.type">
         <div class="image">
           <img  :src="getImage(person.srcImage)" width="150" height="150" alt="">
         </div>
@@ -34,7 +34,7 @@ export default {
   methods: {
     async getPersons() {
       DataService.getPersons().then(data => {
-        this.persons = data;
+        this.persons = data.sort((f,s) => f.type - s.type);
       });
     },
     getImage(path) {
