@@ -49,15 +49,8 @@ export default {
         this.pagesCount = Math.ceil(this.newsList.length / this.maxCards);
       })
     },
-    testMet(i) {
-      let a = i >= (this.currentPage === 1 ? 0 : ((this.currentPage - 1) * this.maxCards));
-      let b = i < (this.currentPage === 1 ? (this.currentPage * this.maxCards) - 1 : (this.currentPage * this.maxCards) + (this.maxCards - 1));
-      let s = a && b;
-      console.log(i, ' < ---- ----- > ', s, '| pagesCount', this.pagesCount);
-      return s;
-    },
     getList() {
-      let newList = this.newsList.filter((_, i) => i > this.testMet(i));
+      let newList = this.newsList.filter((_, i) => (i >= (this.currentPage === 1 ? 0 : ((this.currentPage - 1) * this.maxCards)) && i < this.currentPage * this.maxCards));
       return newList;
     }
   },

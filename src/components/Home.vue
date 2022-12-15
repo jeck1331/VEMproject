@@ -32,6 +32,16 @@ export default {
         'https://key-ms.ru/wp-content/uploads/e/2/d/e2dc92b71070c2babc81b5dd1be97a7b.jpeg'
       ]
     }
+  },
+  created() {
+    this.autoNextImg();
+  },
+  methods: {
+    autoNextImg() {
+      setInterval(() => {
+        this.value = this.value === this.items.length - 1 ? 0 : this.value + 1;
+      }, 3000);
+    }
   }
 }
 </script>

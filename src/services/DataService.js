@@ -22,5 +22,16 @@ export default {
     async getNews() {
         let res = await axios.get(`${Global.API}/news`);
         return res.data;
+    },
+    async getVotes() {
+        let res = await axios.get(`${Global.API}/votes`);
+        return res.data;
+    },
+    async putVotes(votes, previousVote) {
+        let res = await axios.put(`${Global.API}/vote`, {
+            countVotes: Number(votes),
+            previousVote: previousVote
+        });
+        return res.data;
     }
 }

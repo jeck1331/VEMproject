@@ -20,6 +20,7 @@ app.use(express.urlencoded({extended: true}));
         app.locals.persons = mongoClient.db("tulgu").collection("persons");
         app.locals.charter = mongoClient.db("tulgu").collection("charter");
         app.locals.news = mongoClient.db("tulgu").collection("news");
+        app.locals.votes = mongoClient.db("tulgu").collection("Votes");
         app.listen(3000);
         console.log('Server connecting...');
     }catch (err) {
@@ -80,10 +81,36 @@ app.get('/about/datatable', async (req, res) => {
 
 app.get('/persons', async (req, res) => {
     const collection = req.app.locals.persons;
-    console.log(collection)
     try {
         const persons = await collection.find({}).toArray();
         res.send(persons);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+app.put('/vote', async (req, res) => {
+    const collection = req.app.locals.votes;
+    try {
+        await collection.findOneAndUpdate({countVotes: req.body.previousVote}, {
+            $set: {
+                countVotes: req.body.countVotes
+            }
+        });
+        const votesNew = await collection.find({}).toArray();
+        res.send(votesNew);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+app.get('/votes', async (req, res) => {
+    const collection = req.app.locals.votes;
+    try {
+        const votes = await collection.find({}).toArray();
+        res.send(votes);
     } catch (err) {
         console.log(err);
         res.sendStatus(500);
