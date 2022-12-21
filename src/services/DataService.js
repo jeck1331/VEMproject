@@ -27,10 +27,41 @@ export default {
         let res = await axios.get(`${Global.API}/votes`);
         return res.data;
     },
-    async putVotes(votes, previousVote) {
-        let res = await axios.put(`${Global.API}/vote`, {
-            countVotes: Number(votes),
+    async postReg(login, password) {
+        let res = await axios.post(`${Global.API}/reg`, {
+            login: login,
+            password: password
+        });
+        return res.data;
+    },
+    async postAuth(login, password) {
+        let res = await axios.post(`${Global.API}/auth`, {
+            login: login,
+            password: password
+        });
+        return res.data;
+    },
+    async checkToken() {
+        let res = await axios.post(`${Global.API}/checkToken`, {
+            login: sessionStorage.getItem('login'),
+            token: sessionStorage.getItem('token')
+        });
+        return res.data;
+    },
+    async postUserVote(votes, previousVote, name) {
+        let res = await axios.post(`${Global.API}/userVote`, {
+            login: sessionStorage.getItem('login'),
+            token: sessionStorage.getItem('token'),
+            name: name,
+            votes: votes,
             previousVote: previousVote
+        });
+        return res.data;
+    },
+    async postCheckVote() {
+        let res = await axios.post(`${Global.API}/checkUserVote`, {
+            login: sessionStorage.getItem('login'),
+            token: sessionStorage.getItem('token')
         });
         return res.data;
     }

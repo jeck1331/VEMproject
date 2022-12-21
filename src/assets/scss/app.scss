@@ -33,8 +33,12 @@ header {
 			display: flex;
 			align-items: center;
 
-			& .element > .router-link:last-child {
+			& .element > .router-link:last-child, & .element > .item:last-child {
 				margin-right: 0;
+			}
+
+			& .element > .item:last-child {
+				margin-left: 20px;
 			}
 
 			& .element > .router-link {

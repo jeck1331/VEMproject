@@ -7,6 +7,7 @@ import News from "@/components/News";
 import Vote from "@/components/Vote";
 import Reception from "@/components/Reception";
 import PhotoGallery from "@/components/PhotoGallery";
+import Login from "@/components/Login";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -58,6 +59,12 @@ const router = createRouter({
             name: 'gallery',
             component: PhotoGallery,
             props: { title: 'Фотогаллерея' }
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login,
+            props: { title: 'Вход / Регистрация' }
         }
     ]
 })
