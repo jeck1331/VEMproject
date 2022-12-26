@@ -18,7 +18,7 @@
             class="mb-4 item"
             v-model="namePerson"
             clearable
-            :text="hasToken()"
+            v-on:text="hasToken()"
             label="Имя"
         />
         <va-button
@@ -90,9 +90,16 @@ export default {
       });
     },
     hasToken() {
+      debugger
       DataService.checkToken().then(x => {
         this.token = x;
-        this.checkIsVoting();
+      });
+      DataService.postCheckVote().then(x => {
+        if (x === true) {
+          this.showCustomContent = !this.showCustomContent;
+        } else {
+          this.voited = true;
+        }
       });
     },
     checkIsVoting() {
@@ -102,7 +109,7 @@ export default {
         } else {
           this.voited = true;
         }
-      })
+      });
     }
   },
   props: {
